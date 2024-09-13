@@ -1,0 +1,51 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '4.0.4'
+    id 'application'
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+// Set default encoding to UTF-8
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
+shadowJar {
+    baseName = 'PDGExtractor4J'
+    version = '1.0.0'
+    classifier = ''
+}
+
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+// In this section you declare where to find the dependencies of your project
+repositories {
+    mavenCentral()
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'example.pdgextractor.PdgExtractor'
+        )
+    }
+}
+
+// Use application plugin to set main class and system properties
+application {
+    mainClassName = 'example.pdgextractor.PdgExtractor'
+    applicationDefaultJvmArgs = ["-Djava.util.logging.config.file=src/main/resources/logging.properties"]
+}
+
+dependencies {
+    // Use JUnit test framework
+    testImplementation 'junit:junit:4.12'
+
+    implementation group: 'commons-cli', name: 'commons-cli', version: '1.2'
+    implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.8.6'
+    implementation group: 'org.eclipse.jdt', name: 'org.eclipse.jdt.core', version: '3.10.0'
+    implementation group: 'com.github.javaparser', name: 'javaparser-core', version: '3.23.1'
+    implementation group: 'com.github.javaparser', name: 'javaparser-symbol-solver-core', version: '3.23.1'
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.9'
+}
